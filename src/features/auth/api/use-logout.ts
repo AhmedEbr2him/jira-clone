@@ -1,21 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { InferRequestType, InferResponseType } from 'hono';
+import { InferResponseType } from 'hono';
 import { client } from '@/lib/rpc';
 import { useRouter } from 'next/navigation';
 
-type ResponseType = InferResponseType<(typeof client.api.auth.login)['$post']>;
-type RequestType = InferRequestType<(typeof client.api.auth.login)['$post']>;
+type ResponseType = InferResponseType<(typeof client.api.auth.logout)['$post']>;
 
-export const useLogin = () => {
+export const useLogout = () => {
     const router = useRouter();
     const queryClient = useQueryClient();
 
-    const mutation = useMutation<ResponseType, Error, RequestType>({
-        mutationFn: async ({ json }) => {
-            const response = await client.api.auth.login['$post']({ json });
-
+    const mutation = useMutation<ResponseType, Error>({
+        mutationFn: async () => {
+            const response = await client.api.auth.logout['$post'](); // we don't use json here just executed
             return await response.json();
         },
+        // when user logout we are going to force a refetch of the current user
         onSuccess: () => {
             router.refresh();
             queryClient.invalidateQueries({ queryKey: ['current'] });

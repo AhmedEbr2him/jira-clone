@@ -21,7 +21,7 @@ export const SignInCard = () => {
             password: '',
         },
     });
-    const { mutate } = useLogin();
+    const { mutate, isPending } = useLogin();
 
     const onSubmit = (values: z.infer<typeof loginSchema>) => {
         mutate({
@@ -76,7 +76,7 @@ export const SignInCard = () => {
                         />
 
                         <Button
-                            disabled={false}
+                            disabled={isPending}
                             size='lg'
                             className='w-full'
                         >
@@ -93,6 +93,7 @@ export const SignInCard = () => {
                 <Button
                     variant='secondary'
                     size='lg'
+                    disabled={isPending}
                     className='w-full flex items-center gap-1'
                 >
                     <FcGoogle className='mr-2 size-5' />
@@ -101,6 +102,7 @@ export const SignInCard = () => {
                 <Button
                     variant='secondary'
                     size='lg'
+                    disabled={isPending}
                     className='w-full flex items-center gap-3'
                 >
                     <FaGithub className='mr-2 size-5' />

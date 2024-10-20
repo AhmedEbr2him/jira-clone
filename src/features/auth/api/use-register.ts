@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
 import { client } from '@/lib/rpc';
@@ -13,11 +14,20 @@ export const useRegister = () => {
     const mutation = useMutation<ResponseType, Error, RequestType>({
         mutationFn: async ({ json }) => {
             const response = await client.api.auth.register['$post']({ json });
+
+            if (!response) {
+                throw new Error('Faild to register');
+            }
+
             return await response.json();
         },
         onSuccess: () => {
+            toast.success('Registered');
             router.refresh();
             queryClient.invalidateQueries({ queryKey: ['current'] });
+        },
+        onError: () => {
+            toast.error('Faild to register');
         },
     });
 

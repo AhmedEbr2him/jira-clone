@@ -1,11 +1,14 @@
 'use client';
 
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import Image from 'next/image';
-import { ImageIcon } from 'lucide-react';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useCreateWorkSpace } from '../api/use-create-workspace';
+
+import { ImageIcon } from 'lucide-react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { DottedSeparator } from '@/components/dotted-separator';
@@ -18,11 +21,10 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-
-import { createWorkspacesSchema } from '../schemas';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useCreateWorkSpace } from '../api/use-create-workspace';
+
+import { createWorkspacesSchema } from '../schemas';
 
 interface CreateWorkspaceFormProps {
 	onCancel?: () => void;

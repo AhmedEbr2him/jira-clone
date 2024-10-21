@@ -7,29 +7,30 @@ import { useRouter } from 'next/navigation';
 type ResponseType = InferResponseType<(typeof client.api.auth.logout)['$post']>;
 
 export const useLogout = () => {
-    const router = useRouter();
-    const queryClient = useQueryClient();
+	const router = useRouter();
+	const queryClient = useQueryClient();
 
-    const mutation = useMutation<ResponseType, Error>({
-        mutationFn: async () => {
-            const response = await client.api.auth.logout['$post'](); // we don't use json here just executed
+	const mutation = useMutation<ResponseType, Error>({
+		mutationFn: async () => {
+			const response = await client.api.auth.logout['$post'](); // we don't use json here just executed
 
-            if (!response) {
-                throw new Error('Faild to logout');
-            }
+			if (!response) {
+				throw new Error('Faild to logout');
+			}
 
-            return await response.json();
-        },
-        // when user logout we are going to force a refetch of the current user
-        onSuccess: () => {
-            toast.success('Logged out');
-            router.refresh();
-            queryClient.invalidateQueries({ queryKey: ['current'] });
-        },
-        onError: () => {
-            toast.error('Faild to logout');
-        },
-    });
+			return await response.json();
+		},
+		// when user logout we are going to force a refetch of the current user
+		onSuccess: () => {
+			toast.success('Logged out');
+			router.refresh();
+			queryClient.invalidateQueries({ queryKey: ['current'] });
+			queryClient.invalidateQueries({ queryKey: ['workspaces'] });
+		},
+		onError: () => {
+			toast.error('Faild to logout');
+		},
+	});
 
-    return mutation;
+	return mutation;
 };

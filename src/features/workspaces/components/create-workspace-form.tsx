@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { cn } from '@/lib/utils';
 
 import Image from 'next/image';
 import { useRef } from 'react';
@@ -162,9 +163,11 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
 									size='lg'
 									variant='secondary'
 									onClick={onCancel}
+									className={cn(!onCancel && 'invisible')}
 								>
 									Cancel
 								</Button>
+
 								<Button
 									disabled={isPending}
 									size='lg'

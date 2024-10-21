@@ -1,5 +1,5 @@
 'use client';
-import { ResponsiveModal } from '@/components/responsive-model';
+import { ResponsiveModal } from '@/components/responsive-modal';
 import { CreateWorkspaceForm } from './create-workspace-form';
 import { useCreateWorkSpaceModal } from '../hooks/use-create-workspace-modal';
 

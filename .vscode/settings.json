@@ -1,0 +1,6 @@
+{
+	"prettier.bracketSameLine": true,
+	"prettier.arrowParens": "avoid",
+	"prettier.printWidth": 100,
+	"prettier.withNodeModules": false
+}

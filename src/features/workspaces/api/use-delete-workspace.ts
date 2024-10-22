@@ -4,17 +4,17 @@ import { InferRequestType, InferResponseType } from 'hono';
 import { client } from '@/lib/rpc';
 
 type ResponseType = InferResponseType<
-	(typeof client.api.workspaces)[':workspaceId']['$patch'],
+	(typeof client.api.workspaces)[':workspaceId']['$delete'],
 	200
 >;
-type RequestType = InferRequestType<(typeof client.api.workspaces)[':workspaceId']['$patch']>;
+type RequestType = InferRequestType<(typeof client.api.workspaces)[':workspaceId']['$delete']>;
 
-export const useUpdateWorkspace = () => {
+export const useDeleteWorkspace = () => {
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation<ResponseType, Error, RequestType>({
-		mutationFn: async ({ form, param }) => {
-			const response = await client.api.workspaces[':workspaceId']['$patch']({ form, param });
+		mutationFn: async ({ param }) => {
+			const response = await client.api.workspaces[':workspaceId']['$delete']({ param });
 
 			if (!response.ok) {
 				throw new Error('Faild to update a workspace');

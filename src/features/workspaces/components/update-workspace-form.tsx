@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useUpdateWorkspace } from '../api/use-update-workspace';
 
-import { ArrowLeft, CopyIcon, ImageIcon } from 'lucide-react';
+import { ArrowLeft, CopyIcon, ImageIcon, Loader } from 'lucide-react';
 
 import { updateWorkspacesSchema } from '../schemas';
 import { Workspace } from '../types';

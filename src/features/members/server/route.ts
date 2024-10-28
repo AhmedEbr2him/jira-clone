@@ -90,14 +90,15 @@ const app = new Hono()
 			}
 
 			// if we not trying to remove ourselves we are attembing to remove somone else
-			if (member.$id !== memberToDelete.$id && member.role !== MemberRole.ADMIN) {
+			if (member.$id && member.role !== MemberRole.ADMIN) {
 				return c.json({ error: 'Unauthorized' }, 401);
 			}
 			if (allMembersInWorkspace.total === 1) {
 				return c.json({ error: 'Cannot delete the only member' }, 400);
 			}
 
-			await databases.deleteDocument(DATABASE_ID, MEMBERS_ID, memberId);
+			// TODO: DELETE TASKS
+			await databases.deleteDocument(DATABASE_ID, MEMBERS_ID, memberToDelete.$id);
 
 			return c.json({ data: { $id: memberToDelete.$id } });
 		}

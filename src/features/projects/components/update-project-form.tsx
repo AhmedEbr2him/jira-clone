@@ -9,10 +9,14 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
-import { ArrowLeft, CopyIcon, ImageIcon, Loader } from 'lucide-react';
+import { ArrowLeft, ImageIcon } from 'lucide-react';
 
 import { updateProjectSchema } from '../schemas';
 import { Project } from '../types';
+
+import { useDeleteProject } from '../api/use-delete-project';
+import { useUpdateProject } from '../api/use-update-project';
+import { useConfirm } from '@/hooks/use-confirm';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { DottedSeparator } from '@/components/dotted-separator';
@@ -27,10 +31,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-import { useConfirm } from '@/hooks/use-confirm';
-import { useUpdateProject } from '../api/use-update-project';
-import { toast } from 'sonner';
-import { useDeleteProject } from '../api/use-update-project copy';
 
 interface UpdateProjectForm {
 	onCancel?: () => void;
@@ -101,7 +101,7 @@ export const UpdateProjectForm = ({ onCancel, initialValues }: UpdateProjectForm
 			},
 			{
 				onSuccess: () => {
-					window.location.href = `/workspaces/${initialValues.workspaceId}`; // hard refresh to delete any workspaceId cached instead of router.push("/")
+					window.location.href = `/workspaces/${initialValues.workspaceId}`; // hard refresh to delete any workspaceId cached instead of router.
 				},
 			}
 		);

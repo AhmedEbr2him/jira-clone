@@ -17,8 +17,6 @@ export const useUpdateMember = () => {
 				throw new Error('Faild to update member');
 			}
 
-			console.log({ json, param });
-
 			return await response.json();
 		},
 		onSuccess: () => {

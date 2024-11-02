@@ -14,7 +14,6 @@ import {
 import { SelectSeparator } from '@radix-ui/react-select';
 import { TaskStatus } from '../types';
 import { useTaskFilters } from '../hooks/use-task-filters';
-import { MemberAvatar } from '@/features/members/components/member-avatar';
 import { DatePicker } from '@/components/date-picker';
 
 interface DataFiltersProps {

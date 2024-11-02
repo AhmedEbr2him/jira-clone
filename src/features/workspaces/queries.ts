@@ -47,10 +47,11 @@ export const getWorkspace = async ({ workspaceId }: GetWorkspaceProps) => {
 	const { account, databases } = await createSessionClient();
 
 	const user = await account.get();
+
 	const member = await getMember({
 		databases,
-		userId: user.$id,
 		workspaceId,
+		userId: user.$id,
 	});
 
 	if (!member) {

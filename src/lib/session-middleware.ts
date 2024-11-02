@@ -1,3 +1,4 @@
+import 'server-only';
 // create custome middleware for appwrite
 import {
 	Account,
@@ -30,6 +31,7 @@ export const sessionMiddleware = createMiddleware<AdditionalContext>(async (c, n
 		.setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
 	// in register and login (we set the cookie) and in session middleware (we read that cookie)
 	const session = getCookie(c, AUTH_COOKIE);
+
 	if (!session) {
 		return c.json({ error: 'Unauthorized' }, 401);
 	}

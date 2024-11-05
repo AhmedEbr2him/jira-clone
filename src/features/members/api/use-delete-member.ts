@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
 import { client } from '@/lib/rpc';
 
-type ResponseType = InferResponseType<(typeof client.api.members)[':memberId']['$delete'], 200>;
+type ResponseType = InferResponseType<(typeof client.api.members)[':memberId']['$delete']>;
 type RequestType = InferRequestType<(typeof client.api.members)[':memberId']['$delete']>;
 
 export const useDeleteMember = () => {

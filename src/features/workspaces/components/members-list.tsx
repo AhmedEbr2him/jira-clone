@@ -40,7 +40,7 @@ export const MembersList = () => {
 	const handleUpdateMember = (memberId: string, role: MemberRole) => {
 		updateMember({
 			json: { role },
-			param: { memberId },
+			param: { memberId: memberId },
 		});
 	};
 
@@ -49,7 +49,7 @@ export const MembersList = () => {
 		if (!ok) return;
 
 		deleteMember(
-			{ param: { memberId } },
+			{ param: { memberId: memberId } },
 			{
 				onSuccess: () => {
 					window.location.reload();
@@ -119,7 +119,7 @@ export const MembersList = () => {
 
 									<DropdownMenuItem
 										className='font-medium text-amber-700'
-										onClick={() => handleDeleteMember(member?.$id)}
+										onClick={() => handleDeleteMember(member.$id)}
 										disabled={isDeletingMember}>
 										Remove {member.name}
 									</DropdownMenuItem>

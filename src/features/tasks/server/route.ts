@@ -16,6 +16,32 @@ import { createTasksSchema } from '../schemas';
 import { Task, TaskStatus } from '../types';
 
 const app = new Hono()
+	.delete(
+		'/:taskId',
+		sessionMiddleware,
+
+		async c => {
+			const user = c.get('user');
+			const databases = c.get('databases');
+			const { taskId } = c.req.param();
+
+			const task = await databases.getDocument<Task>(DATABASE_ID, TASKS_ID, taskId);
+
+			const member = await getMember({
+				databases,
+				workspaceId: task.workspaceId,
+				userId: user.$id,
+			});
+
+			if (!member) {
+				return c.json({ error: 'Unauthorized' }, 401);
+			}
+
+			await databases.deleteDocument(DATABASE_ID, TASKS_ID, taskId);
+
+			return c.json({ data: { $id: task.$id } });
+		}
+	)
 	.get(
 		'/',
 		sessionMiddleware,
@@ -103,8 +129,6 @@ const app = new Hono()
 				MEMBERS_ID,
 				assigneeIds.length > 0 ? [Query.contains('$id', assigneeIds)] : []
 			);
-
-			console.log(members.documents);
 
 			const assignees = await Promise.all(
 				members.documents.map(async member => {

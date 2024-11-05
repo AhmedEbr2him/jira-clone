@@ -1,3 +1,4 @@
+import React from 'react';
 import { getCurrent } from '@/features/auth/queries';
 import { MembersList } from '@/features/workspaces/components/members-list';
 import { redirect } from 'next/navigation';

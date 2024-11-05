@@ -84,13 +84,15 @@ const app = new Hono()
 				workspaceId: memberToDelete.workspaceId,
 				userId: user.$id,
 			});
-
+			if (!memberToDelete) {
+				return c.json({ error: 'Member not found' }, 404);
+			}
 			if (!member) {
 				return c.json({ error: 'Unauthorized' }, 401);
 			}
 
 			// if we not trying to remove ourselves we are attembing to remove somone else
-			if (member.$id && member.role !== MemberRole.ADMIN) {
+			if (member.$id !== memberToDelete.$id && member.role !== MemberRole.ADMIN) {
 				return c.json({ error: 'Unauthorized' }, 401);
 			}
 			if (allMembersInWorkspace.total === 1) {
